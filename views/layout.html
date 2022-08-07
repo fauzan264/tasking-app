@@ -36,7 +36,7 @@
 									<td>Lorem ipsum</td>
 									<td><span class="tag is-rounded is-small is-success is-light">Done</span></td>
 									<td>
-										<button class="button is-small is-info">Edit</button>
+										<button data-id="1" class="button is-small is-info edit-data">Edit</button>
 									</td>
 								</tr>
 								<tr>
@@ -45,7 +45,7 @@
 									<td>Lorem ipsum</td>
 									<td><span class="tag is-rounded is-small is-warning is-light">Mark as Done</span></td>
 									<td>
-										<button class="button is-small is-info">Edit</button>
+										<button data-id="2" class="button is-small is-info edit-data">Edit</button>
 									</td>
 								</tr>
 							</tbody>
@@ -58,6 +58,14 @@
 			document.getElementById('add').addEventListener('click', ()=> {
 				window.location = "form.html";
 			});
+
+			const editData = document.getElementsByClassName('edit-data');
+
+			for (let edit of editData) {
+				edit.addEventListener('click', ()=> {
+					console.log(edit.getAttribute('data-id'));
+				})
+			}
 		</script>
   </body>
 </html>

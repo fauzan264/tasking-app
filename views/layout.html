@@ -31,21 +31,21 @@
 							</thead>
 							<tbody>
 								<tr>
-									<td>Lorem ipsum</td>
+									<td><a href="#" class="detail-data" data-id="1e4b8eb1-c4c9-4623-9ba0-d7adc23065a1">Lorem ipsum</a></td>
 									<td>Lorem ipsum</td>
 									<td>Lorem ipsum</td>
 									<td><span class="tag is-rounded is-small is-success is-light">Done</span></td>
 									<td>
-										<button data-id="1" class="button is-small is-info edit-data">Edit</button>
+										<button class="button is-small is-info edit-data" data-id="1e4b8eb1-c4c9-4623-9ba0-d7adc23065a1">Edit</button>
 									</td>
 								</tr>
 								<tr>
-									<td>Lorem ipsum</td>
+									<td><a href="#" class="detail-data" data-id="c0b91168-a3a5-490f-b238-5b8c3e4aabae">Lorem ipsum</a></td>
 									<td>Lorem ipsum</td>
 									<td>Lorem ipsum</td>
 									<td><span class="tag is-rounded is-small is-warning is-light">Mark as Done</span></td>
 									<td>
-										<button data-id="2" class="button is-small is-info edit-data">Edit</button>
+										<button class="button is-small is-info edit-data" data-id="c0b91168-a3a5-490f-b238-5b8c3e4aabae">Edit</button>
 									</td>
 								</tr>
 							</tbody>
@@ -60,11 +60,19 @@
 			});
 
 			const editData = document.getElementsByClassName('edit-data');
-
 			for (let edit of editData) {
 				edit.addEventListener('click', ()=> {
-					console.log(edit.getAttribute('data-id'));
-				})
+					// console.log(edit.getAttribute('data-id'));
+					window.location = `form.html?id=${edit.getAttribute('data-id')}`;
+				});
+			}
+
+			const detailData = document.getElementsByClassName('detail-data');
+			for (let detail of detailData) {
+				detail.addEventListener('click', ()=> {
+					// console.log(detail.getAttribute('data-id'));
+					window.location = `detail.html?id=${detail.getAttribute('data-id')}`;
+				});
 			}
 		</script>
   </body>

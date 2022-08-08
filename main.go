@@ -11,6 +11,7 @@ func main() {
 	
 	// route
 	mux.HandleFunc("/", handler.HomeHandler)
+	mux.HandleFunc("/form", handler.FormHandler)
 
 	// assets
 	fileServer := http.FileServer(http.Dir("assets"))

@@ -56,14 +56,14 @@
 		</section>
 		<script>
 			document.getElementById('add').addEventListener('click', ()=> {
-				window.location = "form.html";
+				window.location = "/form";
 			});
 
 			const editData = document.getElementsByClassName('edit-data');
 			for (let edit of editData) {
 				edit.addEventListener('click', ()=> {
 					// console.log(edit.getAttribute('data-id'));
-					window.location = `form.html?id=${edit.getAttribute('data-id')}`;
+					window.location = `/form?id=${edit.getAttribute('data-id')}`;
 				});
 			}
 
@@ -71,7 +71,7 @@
 			for (let detail of detailData) {
 				detail.addEventListener('click', ()=> {
 					// console.log(detail.getAttribute('data-id'));
-					window.location = `detail.html?id=${detail.getAttribute('data-id')}`;
+					window.location = `/detail?id=${detail.getAttribute('data-id')}`;
 				});
 			}
 		</script>

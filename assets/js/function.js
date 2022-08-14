@@ -81,6 +81,60 @@ const list = ()=>{
     xhttp.send();
 }
 
+const getDetail = ()=> {
+    let xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            let getData = JSON.parse(xhttp.responseText);
+            let data = getData.data;
+            let date = new Date(data.deadline);
+
+            let monthDeadline = date.getMonth().toString().length < 2 ? `0${date.getMonth()+1}` : date.getMonth()+1;
+            let dateDeadline = date.getDate().toString().length < 2 ? `0${date.getDate()}` : date.getDate();
+            let deadline = [dateDeadline, monthDeadline, date.getFullYear()].join('-');
+
+            let createAt = new Date(data.created_at);
+
+            let monthCreatedAt = createAt.getMonth().toString().length < 2 ? `0${createAt.getMonth()+1}` : createAt.getMonth()+1;
+            let dateCreatedAt = createAt.getDate().toString().length < 2 ? `0${createAt.getDate()}` : createAt.getDate();
+            let hourCreatedAt = createAt.getHours();
+            let minuteCreatedAt = createAt.getMinutes();
+            let secondCreatedAt = createAt.getSeconds();
+            
+            let fullDate = [dateCreatedAt, monthCreatedAt, createAt.getFullYear()].join('-');
+            let fullClock = [hourCreatedAt, minuteCreatedAt, secondCreatedAt].join(":");
+            let fullCreatedAt = [fullDate, fullClock].join(" ");
+
+            statusTask = data.status == 0 ? "Pending" : "Done";
+
+            document.getElementById("content").innerHTML += `
+                        <div class="field">
+                            <label for="task" class="label">Task</label>
+                            <p>${data.task}</p>
+                        </div>
+                        <div class="field">
+                            <label for="assign" class="label">Assign</label>
+                            <p>${data.assign}</p>
+                        </div>
+                        <div class="field">
+                            <label for="deadline" class="label">Deadline</label>
+                            <p>${deadline}</p>
+                        </div>
+                        <div class="field">
+                            <label for="status" class="label">Status</label>
+                            <p>${statusTask}</p>
+                        </div>
+                        <div class="field">
+                            <label for="created_at" class="label">Created at</label>
+                            <p>${fullCreatedAt}</p>
+                        </div>
+                    `;
+        }
+    };
+    xhttp.open("GET", "http://localhost:8080/api/v1/task/"+paramId, true);
+    xhttp.send();
+}
+
 const getData = ()=> {
     let xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {

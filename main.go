@@ -8,10 +8,11 @@ import (
 
 func main() {
 	mux := http.NewServeMux()
-	
+
 	// route
 	mux.HandleFunc("/", handler.HomeHandler)
 	mux.HandleFunc("/form", handler.FormHandler)
+	mux.HandleFunc("/detail", handler.DetailHandler)
 
 	// assets
 	fileServer := http.FileServer(http.Dir("assets"))

@@ -43,117 +43,19 @@
 			</div>
     </div>
   </section>
+  <script src="/static/js/function.js"></script>
   <script>
     const urlParams = new URLSearchParams(window.location.search);
     const paramId = urlParams.get("id");
 
-    const getData = ()=> {
-
-      let xhttp = new XMLHttpRequest();
-      xhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-          let getData = JSON.parse(xhttp.responseText);
-          let data = getData.data;
-          document.getElementById('task').value = data.task;
-          document.getElementById('assign').value = data.assign;
-          let date = new Date(data.deadline);
-
-          let monthDeadline = date.getMonth().toString().length < 2 ? `0${date.getMonth()+1}` : date.getMonth()+1;
-          let dateDeadline = date.getDate().toString().length < 2 ? `0${date.getDate()}` : date.getDate();
-        
-          document.getElementById('deadline').value = [date.getFullYear(), monthDeadline, dateDeadline].join('-');
-        }
-      };
-    
-      xhttp.open("GET", "http://localhost:8080/api/v1/task/"+paramId, true);
-      xhttp.send();
-    }
     if(paramId) {
       getData();
     }
 
     const form = document.getElementById("form");
     form.addEventListener("submit", function() {
-      if (paramId) {
-        update(paramId);
-      } else {
-        create();
-      }
+      paramId ? update(paramId) : create();
     });
-
-    const create = ()=> {
-      const data = {
-        task: document.getElementById("task").value,
-        assign: document.getElementById("assign").value,
-        deadline: document.getElementById("deadline").value
-      }
-      const url = "http://localhost:8080/api/v1/tasks";
-			fetch(url, {
-				method: "POST",
-				headers: {'Content-Type': 'application/json'},
-				body: JSON.stringify(data)
-			}).then(res => {
-				alert('Create task succes!');
-				window.location = `/`;
-			});
-		}
-
-    const update = (id)=> {
-      const data = {
-        task: document.getElementById("task").value,
-        assign: document.getElementById("assign").value,
-        deadline: document.getElementById("deadline").value
-      }
-      const url = "http://localhost:8080/api/v1/task/"+id 
-			fetch(url, {
-				method: "PUT",
-				headers: {'Content-Type': 'application/json'},
-				body: JSON.stringify(data)
-			}).then(res => {
-				alert('Update task succes!');
-				window.location = `/`;
-			});
-		}
-      // formInput.append("task", document.getElementById("task").value);
-      // formInput.append("assign", document.getElementById("assign").value);
-      // formInput.append("deadline", document.getElementById("deadline").value);
-      // console.log(formInput);
-      // console.log(formInput.values);
-
-
-
-
-
-      // let data = new FormData(document.getElementById("form"))
-      
-
-      // var formData = document.getElementById("form");
-        // const update = ()=> {
-        //   let form = document.getElementById("form");
-        //   var dataForm = new FormData(form);
-        //   // let task = document.getElementById("task").value;
-        //   // let assign = document.getElementById("assign").value;
-        //   // let deadline = document.getElementById("deadline").value;
-        //   dataForm.append("task", task);
-        //   dataForm.append("assign", assign);
-        //   dataForm.append("deadline", deadline);
-        //   alert(JSON.stringify(dataForm));
-        // }
-
-      
-      // form.onsubmit = async (e) => {
-      //   e.preventDefault();
-
-      //   let urlParams = new URLSearchParams(window.location.search)
-      //   let response = await fetch('http://localhost:8080/api/v1/task/'+urlParams.get("id"), {
-      //     method: "PUT",
-      //     body: new FormData(form[0])
-      //   });
-
-      //   let result = await response.json();
-
-      //   alert(result.meta.status);
-      // }
   </script>
   </body>
 </html>

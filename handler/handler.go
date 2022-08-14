@@ -12,6 +12,9 @@ import (
 	"tasking-app/entity"
 )
 
+// layout template
+var viewLayout string = path.Join("views", "layout.html")
+
 func HomeHandler(w http.ResponseWriter, r *http.Request) {
 	// url
 	if r.URL.Path != "/" {
@@ -19,7 +22,7 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	temp, err := template.ParseFiles(path.Join("views", "list.html"))
+	temp, err := template.ParseFiles(path.Join("views", "list.html"), viewLayout)
 
 	if err != nil {
 		log.Println(err)
@@ -43,8 +46,8 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 	json.Unmarshal(responseData, &responseObject)
 
 	data := map[string]interface{}{
-		"title":   "Home",
-		"content": "Homepage",
+		"title":   "List",
+		"content": "List Data",
 	}
 
 	err = temp.Execute(w, data)
@@ -56,7 +59,7 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func FormHandler(w http.ResponseWriter, r *http.Request) {
-	temp, err := template.ParseFiles(path.Join("views", "form.html"))
+	temp, err := template.ParseFiles(path.Join("views", "form.html"), viewLayout)
 
 	if err != nil {
 		log.Println(err)
@@ -66,7 +69,7 @@ func FormHandler(w http.ResponseWriter, r *http.Request) {
 
 	data := map[string]interface{}{
 		"title":   "Form",
-		"content": "Form Add Task",
+		"content": "Form Task",
 	}
 
 	err = temp.Execute(w, data)

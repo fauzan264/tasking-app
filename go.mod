@@ -1,4 +1,4 @@
-module tasking-app
+module github.com/fauzan264/tasking-app
 
 go 1.14
 

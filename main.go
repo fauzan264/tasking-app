@@ -3,7 +3,7 @@ package main
 import (
 	"log"
 	"net/http"
-	"tasking-app/handler"
+	"github.com/fauzan264/tasking-app/handler"
 )
 
 func main() {

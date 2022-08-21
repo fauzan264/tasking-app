@@ -1,3 +1,24 @@
+const dateFormat = (datetime) =>{
+    let newDate = new Date(datetime);
+
+    let monthCreatedAt = newDate.getMonth().toString().length < 2 ? `0${newDate.getMonth()+1}` : newDate.getMonth()+1;
+    let dateCreatedAt = newDate.getDate().toString().length < 2 ? `0${newDate.getDate()}` : newDate.getDate();
+
+    let fullDate = [dateCreatedAt, monthCreatedAt, newDate.getFullYear()].join('-');
+
+    if (newDate.getHours() != null) {
+        let hourCreatedAt = newDate.getHours();
+        let minuteCreatedAt = newDate.getMinutes();
+        let secondCreatedAt = newDate.getSeconds();
+        let fullClock = [hourCreatedAt, minuteCreatedAt, secondCreatedAt].join(":");
+        fullDateTime = [fullDate, fullClock].join(" ");
+
+        return fullDateTime;
+    }
+    
+    return fullDate;
+}
+
 let listTask = (id, task, deadline, assign, status) => {
     let statusTask;
     let statusColor;
@@ -30,12 +51,7 @@ const list = ()=>{
             let getData = JSON.parse(xhttp.responseText);
             let data = getData.data;
             data.forEach(e => {
-                let date = new Date(e.deadline);
-    
-                let monthDeadline = date.getMonth().toString().length < 2 ? `0${date.getMonth()+1}` : date.getMonth()+1;
-                let dateDeadline = date.getDate().toString().length < 2 ? `0${date.getDate()}` : date.getDate();
-    
-                let deadline = [dateDeadline, monthDeadline, date.getFullYear()].join('-');
+                let deadline = dateFormat(e.deadline);
                 document.getElementById("task-list").innerHTML += listTask(e.id, e.task, deadline, e.assign, e.status);
             });
     
@@ -92,18 +108,7 @@ const getDetail = ()=> {
             let monthDeadline = date.getMonth().toString().length < 2 ? `0${date.getMonth()+1}` : date.getMonth()+1;
             let dateDeadline = date.getDate().toString().length < 2 ? `0${date.getDate()}` : date.getDate();
             let deadline = [dateDeadline, monthDeadline, date.getFullYear()].join('-');
-
-            let createAt = new Date(data.created_at);
-
-            let monthCreatedAt = createAt.getMonth().toString().length < 2 ? `0${createAt.getMonth()+1}` : createAt.getMonth()+1;
-            let dateCreatedAt = createAt.getDate().toString().length < 2 ? `0${createAt.getDate()}` : createAt.getDate();
-            let hourCreatedAt = createAt.getHours();
-            let minuteCreatedAt = createAt.getMinutes();
-            let secondCreatedAt = createAt.getSeconds();
-            
-            let fullDate = [dateCreatedAt, monthCreatedAt, createAt.getFullYear()].join('-');
-            let fullClock = [hourCreatedAt, minuteCreatedAt, secondCreatedAt].join(":");
-            let fullCreatedAt = [fullDate, fullClock].join(" ");
+            let fullCreatedAt = dateFormat(data.created_at);
 
             statusTask = data.status == 0 ? "Pending" : "Done";
 
@@ -187,3 +192,4 @@ const update = (id)=> {
         window.location = `/`;
     });
 }
+
